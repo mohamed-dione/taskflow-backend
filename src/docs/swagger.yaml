@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: TaskFlow API
+  version: 1.0.0
+  description: Documentation officielle de l'API REST TaskFlow (Projets, Équipes, Tâches, Statistiques).
+servers:
+  - url: http://localhost:5000/api
+    description: Serveur local de développement
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /auth/register:
+    post:
+      summary: Inscription d'un nouvel utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum: [USER, ADMIN]
+      responses:
+        '201':
+          description: Utilisateur créé avec succès
+        '400':
+          description: Données invalides
+  /auth/login:
+    post:
+      summary: Connexion d'un utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Connexion réussie avec retour du token JWT
+        '401':
+          description: Identifiants incorrects
+  /dashboard/stats:
+    get:
+      summary: Consulter les statistiques globales
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Statistiques récupérées avec succès
+        '401':
+          description: Non authentifié
