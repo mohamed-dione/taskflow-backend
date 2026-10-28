@@ -45,4 +45,11 @@ app.use((err, req, res, next) => {
   });
 });
 
+console.log('Vérification des routeurs :');
+console.log('authRoutes :', typeof authRoutes);
+console.log('userRoutes :', typeof userRoutes);
+console.log('projectRoutes :', typeof projectRoutes);
+console.log('taskRoutes :', typeof taskRoutes);
+console.log('statsRoutes :', typeof statsRoutes);
+
 module.exports = app;

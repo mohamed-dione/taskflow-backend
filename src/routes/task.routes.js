@@ -1,4 +1,7 @@
+const express = require('express')
 const Task = require('../models/task.model');
+
+const router = express.Router();
 
 // Créer une tâche
 const createTask = async (req, res) => {
@@ -56,10 +59,12 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = {
-  createTask,
-  getTasks,
-  getTaskById,
-  updateTask,
-  deleteTask
-};
+// Déclaration des routes
+router.post('/', createTask);
+router.get('/', getTasks);
+router.get('/:id', getTaskById);
+router.put('/:id', updateTask);
+router.delete('/:id', deleteTask);
+
+// Export du routeur Express
+module.exports = router;
