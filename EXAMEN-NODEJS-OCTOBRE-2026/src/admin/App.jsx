@@ -11,7 +11,7 @@ function AdminDashboard() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('https://taskflow-backend-2phg.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -34,13 +34,13 @@ function AdminDashboard() {
   // Récupération des données statistiques et utilisateurs
   const fetchDashboardData = async (authToken) => {
     try {
-      const resStats = await fetch('http://localhost:5000/api/dashboard/stats', {
+      const resStats = await fetch('https://taskflow-backend-2phg.onrender.com/api/dashboard/stats', {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       const statsData = await resStats.json();
       setStats(statsData);
 
-      const resUsers = await fetch('http://localhost:5000/api/users', {
+      const resUsers = await fetch('https://taskflow-backend-2phg.onrender.com/api/users', {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       const usersData = await resUsers.json();
@@ -60,7 +60,7 @@ function AdminDashboard() {
         <h2>Connexion Backoffice Admin</h2>
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <input type="email" placeholder="Email Admin" value={email} onChange={e => setEmail(e.target.value)} required />
-          <input type="password" placeholder="Mot de passe" value={password} onChange={e => PASSWORD(e.target.value)} required />
+          <input type="password" placeholder="Mot de passe" value={password} onChange={e => setPassword(e.target.value)} required />
           <button type="submit" style={{ background: '#007bff', color: '#fff', padding: '10px', border: 'none' }}>Se connecter</button>
         </form>
       </div>
