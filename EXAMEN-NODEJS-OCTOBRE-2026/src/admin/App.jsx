@@ -63,7 +63,22 @@ function AdminDashboard() {
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <input type="email" placeholder="Email Admin" value={email} onChange={e => setEmail(e.target.value)} required />
           <input type="password" placeholder="Mot de passe" value={password} onChange={e => setPassword(e.target.value)} required />
-          <button type="submit" style={{ background: '#007bff', color: '#fff', padding: '10px', border: 'none' }}>Se connecter</button>
+          <button
+  type="submit"
+  style={{
+    backgroundColor: '#007bff',
+    color: '#ffffff',
+    padding: '12px',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    pointerEvents: 'auto',
+    position: 'relative',
+    zIndex: 10
+  }}
+>
+  Se connecter
+</button>
         </form>
       </div>
     );
