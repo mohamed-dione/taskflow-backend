@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [users, setUsers] = useState([]);
@@ -11,7 +13,7 @@ function AdminDashboard() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://taskflow-backend-2phg.onrender.com/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -27,20 +29,20 @@ function AdminDashboard() {
       }
     } catch (err) {
       console.error(err);
-      ('Erreur de connexion');
+      alert('Erreur de connexion');
     }
   };
 
   // Récupération des données statistiques et utilisateurs
   const fetchDashboardData = async (authToken) => {
     try {
-      const resStats = await fetch('https://taskflow-backend-2phg.onrender.com/api/dashboard/stats', {
+      const resStats = await fetch(`${API_URL}/api/dashboard/stats`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       const statsData = await resStats.json();
       setStats(statsData);
 
-      const resUsers = await fetch('https://taskflow-backend-2phg.onrender.com/api/users', {
+      const resUsers = await fetch(`${API_URL}/api/users`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       const usersData = await resUsers.json();
