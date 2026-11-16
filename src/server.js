@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const app = require('./app');
 
 // Port du serveur HTTP
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
@@ -45,3 +45,7 @@ async function startServer() {
 }
 
 startServer();
+
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur mon API');
+});
