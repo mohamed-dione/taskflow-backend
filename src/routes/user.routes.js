@@ -4,6 +4,8 @@ const userController = require('../controllers/user.controller');
 // Vous pouvez ajouter ici vos middlewares de vérification d'authentification et de rôle admin si ce n'est pas déjà fait
 
 router.get('/', userController.getAllUsers);
+router.patch('/me', userController.updateMe);
+router.get('/me', userController.getMe);
 router.get('/:id', userController.getUserById);
 router.patch('/:id/role', userController.updateUserRole);
 router.delete('/:id', userController.deleteUser);
