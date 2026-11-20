@@ -1,5 +1,4 @@
 const dns = require('node:dns');
-
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 require('dotenv').config({
@@ -9,7 +8,6 @@ require('dotenv').config({
 const mongoose = require('mongoose');
 const app = require('./app');
 
-// Port du serveur HTTP
 const PORT = process.env.PORT || 10000;
 
 async function startServer() {
@@ -18,16 +16,12 @@ async function startServer() {
       throw new Error('MONGO_URI est absent du fichier .env');
     }
 
-     console.log('🔎 Tentative de connexion à MongoDB Atlas...');
-
-    // Connexion à MongoDB
+    console.log('🔎 Tentative de connexion à MongoDB Atlas...');
     await mongoose.connect(process.env.MONGO_URI, {
       serverSelectionTimeoutMS: 10000
     });
-
     console.log('✅ MongoDB connecté');
 
-    // Démarrage du serveur HTTP sur le port 5000
     const server = app.listen(PORT, () => {
       console.log(`🚀 Serveur lancé sur http://localhost:${PORT}`);
       console.log(`📚 Documentation Swagger : http://localhost:${PORT}/api-docs`);
@@ -45,7 +39,3 @@ async function startServer() {
 }
 
 startServer();
-
-app.get('/', (req, res) => {
-  res.send('Bienvenue sur mon API');
-});

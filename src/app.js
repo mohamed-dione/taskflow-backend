@@ -9,12 +9,21 @@ const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const projectRoutes = require('./routes/project.routes');
 const taskRoutes = require('./routes/task.routes');
-const statsRoutes = require('./routes/stats.routes');
+const dashboardRoutes = require('./routes/dashboard.routes'); // <-- CORRIGÉ : pas stats.routes
 
 const app = express();
 
+// CORS - c'est ICI, pas dans server.js
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://taskflow-front.vercel.app',
+  ],
+  credentials: true
+}));
+
 // Middlewares globaux
-app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
@@ -27,7 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
-app.use('/api/dashboard', statsRoutes);
+app.use('/api/dashboard', dashboardRoutes); // <-- CORRIGÉ
 
 // Route de test racine
 app.get('/', (req, res) => {
@@ -45,4 +54,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app;
+module.exports = app
