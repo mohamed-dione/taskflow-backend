@@ -19,6 +19,8 @@ app.use(cors({
     'http://localhost:5173',
     'http://localhost:3000',
     'https://taskflow-front.vercel.app',
+    'https://taskflow-backend-1xb1.onrender.com/',
+
   ],
   credentials: true
 }));
