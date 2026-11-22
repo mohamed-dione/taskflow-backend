@@ -18,7 +18,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://taskflow-front1.vercel.app'
+  'https://taskflow-backend-gibe.onrender.com'
 ];
 
 const corsOptions = {
