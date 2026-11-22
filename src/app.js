@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -9,45 +10,77 @@ const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const projectRoutes = require('./routes/project.routes');
 const taskRoutes = require('./routes/task.routes');
-const dashboardRoutes = require('./routes/dashboard.routes'); // <-- CORRIGÉ : pas stats.routes
+const dashboardRoutes = require('./routes/dashboard.routes');
 
 const app = express();
 
-// CORS - c'est ICI, pas dans server.js
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://taskflow-front.vercel.app',
-    'https://taskflow-backend-1xb1.onrender.com/',
+// Configuration CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://taskflow-front1.vercel.app'
+];
 
-  ],
-  credentials: true
-}));
+const corsOptions = {
+  origin: (origin, callback) => {
+    const isVercelPreview =
+      origin &&
+      /^https:\/\/taskflow-front-[a-z0-9-]+-taskflow-admin\.vercel\.app$/.test(origin);
+
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      isVercelPreview
+    ) {
+      return callback(null, true);
+    }
+
+    console.log('Origine CORS refusée :', origin);
+    return callback(new Error('Origine non autorisée par CORS'));
+  },
+
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+// Middleware CORS
+app.use(cors(corsOptions));
 
 // Middlewares globaux
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Documentation Swagger / OpenAPI
-const swaggerDocument = YAML.load(path.join(__dirname, './docs/swagger.yaml'));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Documentation Swagger
+const swaggerDocument = YAML.load(
+  path.join(__dirname, './docs/swagger.yaml')
+);
 
-// Enregistrement des routes de l'API
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
+
+// Routes API
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
-app.use('/api/dashboard', dashboardRoutes); // <-- CORRIGÉ
+app.use('/api/dashboard', dashboardRoutes);
 
-// Route de test racine
+// Route racine
 app.get('/', (req, res) => {
-  res.json({ message: 'Bienvenue sur l’API TaskFlow 🚀' });
+  res.json({
+    message: 'Bienvenue sur l’API TaskFlow 🚀'
+  });
 });
 
-// Middleware global de gestion des erreurs
+// Gestion des erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
   res.status(err.status || 500).json({
     error: {
       message: err.message || 'Erreur interne du serveur',
@@ -56,4 +89,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app
+module.exports = app;
