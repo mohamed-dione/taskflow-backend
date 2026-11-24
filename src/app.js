@@ -17,8 +17,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-   'https://taskflow-front-ashen.vercel.app',
-  'https://taskflow-backend-yvt8.onrender.com//'
+   'https://taskflow-front-one-ashen.vercel.app'
 ];
 
 const corsOptions = {
