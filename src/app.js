@@ -19,7 +19,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
    'https://taskflow-front-seven.vercel.app',
-  'https://taskflow-backend-ao7t.onrender.com/'
+  'https://taskflow-backend-yvt8.onrender.com//'
 ];
 
 const corsOptions = {
