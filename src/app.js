@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -18,7 +17,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-   'https://taskflow-front-seven.vercel.app',
+   'https://taskflow-front-ashen.vercel.app',
   'https://taskflow-backend-yvt8.onrender.com//'
 ];
 
