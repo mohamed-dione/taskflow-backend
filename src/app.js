@@ -20,33 +20,12 @@ const allowedOrigins = [
   'https://taskflow-front-one-ashen.vercel.app'
 ];
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    const isVercelPreview =
-      origin &&
-      /^https:\/\/taskflow-front-[a-z0-9-]+-taskflow-admin\.vercel\.app$/.test(origin);
-
-    if (
-      !origin ||
-      allowedOrigins.includes(origin) ||
-      isVercelPreview
-    ) {
-      return callback(null, true);
-    }
-
-    console.log('Origine CORS refusée :', origin);
-    return callback(new Error('Origine non autorisée par CORS'));
-  },
-
+app.use(cors({
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  optionsSuccessStatus: 204
-};
-
-// Middleware CORS
-app.use(cors(corsOptions));
-
+}));
+    
 // Middlewares globaux
 app.use(express.json());
 app.use(morgan('dev'));
